@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khazana King OTT - Premium Streaming Platform</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Khazana King OTT is the ultimate streaming platform for blockbuster movies, exclusive web series, live TV channels, and sports. Stream in 4K UHD.">
+  <meta name="keywords" content="Khazana King, OTT, streaming, movies, web series, live tv, online movies, watch free, netflix clone, prime video">
+  <meta name="author" content="Khazana King OTT Group">
+  
+  <!-- PWA Web Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#E50914">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Khazana King">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+
+  <!-- Sticky Header / Navbar -->
+  <header class="navbar" id="app-navbar">
+    <div class="nav-left">
+      <a href="#home" class="logo" id="nav-logo">
+        Khazana <span>King</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li class="nav-item active" id="nav-link-home"><a href="#home">Home</a></li>
+          <li class="nav-item" id="nav-link-movies"><a href="#movies">Movies</a></li>
+          <li class="nav-item" id="nav-link-series"><a href="#series">Web Series</a></li>
+          <li class="nav-item" id="nav-link-live"><a href="#live-tv">Live TV</a></li>
+          <li class="nav-item" id="nav-link-categories"><a href="#categories">Categories</a></li>
+          <li class="nav-item" id="nav-link-mylist"><a href="#my-list">My List</a></li>
+        </ul>
+      </nav>
+    </div>
+    
+    <div class="nav-right">
+      <!-- Nav Search -->
+      <div class="nav-search-container">
+        <button class="search-trigger-btn" id="nav-search-trigger" title="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <input type="text" class="nav-search-input" id="nav-search-input" placeholder="Titles, genres, cast...">
+      </div>
+      
+      <!-- Theme Toggle -->
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Theme" style="color: var(--text-secondary); display: flex; align-items: center; font-size: 1.2rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-sun" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+
+      <!-- Notifications -->
+      <div class="notification-container">
+        <button class="notification-btn" id="nav-notification-btn" title="Notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notification-badge" id="notification-count">2</span>
+        </button>
+      </div>
+
+      <!-- User Avatar / Join Us Trigger -->
+      <div class="profile-menu-container">
+        <button class="profile-avatar-btn" id="nav-profile-btn" style="display:none;">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" alt="User Profile" id="nav-profile-img">
+        </button>
+        <button class="btn btn-primary" id="nav-signin-btn" style="padding: 8px 16px; font-size: 0.85rem;">Sign In</button>
+        
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown" id="profile-dropdown-menu">
+          <div class="dropdown-user-info">
+            <div class="user-name" id="dropdown-user-name">Guest User</div>
+            <div class="user-plan" id="dropdown-user-plan">Free Trial</div>
+          </div>
+          <a href="#dashboard" class="dropdown-item" id="dropdown-link-dashboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Account Dashboard
+          </a>
+          <a href="#admin" class="dropdown-item" id="dropdown-link-admin" style="display:none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+            Admin Panel
+          </a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" id="dropdown-btn-signout" style="width: 100%; text-align: left;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Burger Menu (Mobile Only) -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" title="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <a href="#home" class="logo" id="mobile-logo" style="margin-bottom: 20px;">
+      Khazana <span>King</span>
+    </a>
+    <ul class="mobile-links" style="list-style: none; display: flex; flex-direction: column; gap: 20px; font-size: 1.1rem; font-weight: 600;">
+      <li class="mobile-item" id="mobile-link-home"><a href="#home">Home</a></li>
+      <li class="mobile-item" id="mobile-link-movies"><a href="#movies">Movies</a></li>
+      <li class="mobile-item" id="mobile-link-series"><a href="#series">Web Series</a></li>
+      <li class="mobile-item" id="mobile-link-live"><a href="#live-tv">Live TV</a></li>
+      <li class="mobile-item" id="mobile-link-categories"><a href="#categories">Categories</a></li>
+      <li class="mobile-item" id="mobile-link-mylist"><a href="#my-list">My List</a></li>
+      <li class="mobile-item" id="mobile-link-plans"><a href="#plans">Subscription Plans</a></li>
+      <li class="mobile-item" id="mobile-link-contact"><a href="#contact">Contact Us</a></li>
+    </ul>
+  </aside>
+
+  <!-- ==================== VIEW 0: LANDING VIEW (Logged Out) ==================== -->
+  <main class="view" id="landing-view">
+    <!-- Netflix Style Splash Hero -->
+    <section class="landing-hero" id="landing-hero" style="background: linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0.75) 50%, rgba(10, 10, 10, 0.95) 100%), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; flex-direction: column;">
+      <div style="max-width: 800px; z-index: 2; margin-top: 40px; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <span class="hero-badge" style="background: var(--primary); border: none; font-size: 0.8rem; padding: 5px 15px; margin-bottom: 20px;">🎬 Unlimited Movies & Live TV</span>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.15; margin-bottom: 20px; font-weight: 800; font-family: 'Outfit'; letter-spacing: -1px; text-shadow: 0 4px 10px rgba(0,0,0,0.8);">Unlimited movies, TV shows and more.</h1>
+        <p style="font-size: clamp(1.1rem, 2vw, 1.5rem); margin-bottom: 20px; color: #eee; font-weight: 500;">Starts at just ₹199/month. Cancel anytime.</p>
+        <p style="font-size: 1rem; margin-bottom: 30px; color: var(--text-secondary);">Ready to watch? Enter your email to create or restart your membership.</p>
+        
+        <form class="newsletter-form" id="landing-email-form" style="max-width: 600px; display: flex; gap: 10px; margin: 0 auto; flex-wrap: wrap;" onsubmit="event.preventDefault();">
+          <input type="email" class="newsletter-input" id="landing-email-input" placeholder="Email Address" required style="flex: 2; min-width: 250px; font-size: 1rem; padding: 14px 20px; background: rgba(0, 0, 0, 0.65); border-color: rgba(255,255,255,0.25);">
+          <button type="submit" class="btn btn-primary" id="landing-getstarted-btn" style="flex: 1; min-width: 160px; font-size: 1.05rem; padding: 14px 28px; font-weight: 700; text-transform: uppercase;">Get Started ›</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Featured Plan Highlight Row -->
+    <section style="padding: 50px 4%; text-align: center; background: rgba(229, 9, 20, 0.05); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <span class="hero-badge" style="background: #e50914; color: white; border: none; font-size: 0.75rem; padding: 4px 12px; font-weight: 800; text-transform: uppercase;">Budget Mobile Plan</span>
+        <h2 style="font-size: 2.2rem; margin: 15px 0 10px; font-family: 'Outfit';">Watch on your mobile phone for ₹199</h2>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 25px;">Unlimited streaming of all movies, web series, live channels, and kids entertainment on 1 mobile screen in SD quality. Cancel anytime online.</p>
+        <a href="#plans" class="btn btn-primary" style="padding: 12px 30px; font-weight: 700;">View Full Pricing Details</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 0.5: PLANS SELECTION VIEW (Logged In, Unsubscribed) ==================== -->
+  <main class="view hidden" id="plans-selection-view">
+    <section class="pricing-section">
+      <div style="max-width: 600px; margin: 0 auto 30px; text-align: center;">
+        <span style="font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">STEP 2 OF 3</span>
+        <h2 style="font-size: 2.2rem; font-family: 'Outfit'; margin: 5px 0 10px;">Choose the plan that's right for you</h2>
+        <p style="color: var(--text-secondary); font-size: 1rem;">Unlock Khazana King OTT and stream unlimited movies. Select a tier below to proceed.</p>
+      </div>
+      
+      <div class="billing-toggle-container">
+        <span class="toggle-label active" id="plans-sel-toggle-monthly">Monthly Billing</span>
+        <span class="toggle-label" id="plans-sel-toggle-yearly">Yearly (Save 20%)</span>
+      </div>
+
+      <div class="plans-grid" id="plans-sel-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 1: HOME VIEW ==================== -->
+  <main class="view hidden" id="home-view">
+    
+    <!-- Hero Banner Slider -->
+    <section class="hero-slider" id="hero-slider"></section>
+
+    <!-- Search & Filter Controls -->
+    <section class="search-filter-section">
+      <div class="search-filter-grid">
+        <div class="search-bar-row">
+          <svg class="search-icon-main" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input-main" id="search-input-main" placeholder="Search for movies, TV shows, cast or keywords...">
+          
+          <!-- Auto-suggestions dropdown -->
+          <div class="search-suggestions-dropdown" id="search-suggestions-main"></div>
+        </div>
+        
+        <div class="filters-row">
+          <div class="filter-group">
+            <label for="filter-genre">Genre</label>
+            <select class="filter-select" id="filter-genre">
+              <option value="">All Genres</option>
+              <option value="Action">Action</option>
+              <option value="Drama">Drama</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Horror">Horror</option>
+              <option value="Romance">Romance</option>
+              <option value="Documentary">Documentary</option>
+              <option value="Kids">Kids</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-language">Language</label>
+            <select class="filter-select" id="filter-language">
+              <option value="">All Languages</option>
+              <option value="Hindi">Hindi</option>
+              <option value="English">English</option>
+              <option value="Spanish">Spanish</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-year">Release Year</label>
+            <select class="filter-select" id="filter-year">
+              <option value="">All Years</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-rating">Rating</label>
+            <select class="filter-select" id="filter-rating">
+              <option value="">All Ratings</option>
+              <option value="9">9.0+ Excellent</option>
+              <option value="8">8.0+ Great</option>
+              <option value="7">7.0+ Good</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-country">Country</label>
+            <select class="filter-select" id="filter-country">
+              <option value="">All Countries</option>
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+              <option value="Netherlands">Netherlands</option>
+              <option value="Spain">Spain</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Carousels -->
+    <section class="content-row" id="row-continue-watching" style="display:none;"></section>
+    <section class="content-row" id="row-trending"></section>
+    <section class="content-row" id="row-latest"></section>
+    <section class="content-row" id="row-popular"></section>
+    <section class="content-row" id="row-toprated"></section>
+    <section class="content-row" id="row-recommended"></section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+      <div class="row-header">
+        <h2 class="row-title">Explore Categories</h2>
+      </div>
+      <div class="categories-grid" id="categories-grid"></div>
+    </section>
+
+    <!-- Live TV Section -->
+    <section class="live-tv-section">
+      <div class="row-header">
+        <h2 class="row-title">Live Channels</h2>
+      </div>
+      <div class="live-grid" id="live-channels-grid"></div>
+    </section>
+
+    <!-- Subscription Plans Section -->
+    <section class="pricing-section" id="pricing-plans-section">
+      <h2 class="pricing-title">Subscription Plans</h2>
+      <p class="pricing-subtitle">Select the package that fits your entertainment lifestyle. Cancel anytime.</p>
+      
+      <div class="billing-toggle-container">
+        <span class="toggle-label active" id="billing-toggle-monthly">Monthly Billing</span>
+        <span class="toggle-label" id="billing-toggle-yearly">Yearly (Save 20%)</span>
+      </div>
+
+      <div class="plans-grid" id="plans-grid-container"></div>
+
+      <!-- Feature Comparison Table -->
+      <div class="comparison-container">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Features</th>
+              <th>Basic</th>
+              <th>Standard</th>
+              <th>Premium</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="comparison-feature-name">Monthly Price</td>
+              <td>₹199</td>
+              <td>₹499</td>
+              <td>₹799</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-name">Video Quality</td>
+              <td>Good (720p)</td>
+              <td>Better (1080p)</td>
+              <td>Best (4K + HDR)</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-name">Ad-Free Experience</td>
+              <td>No (Contains Ads)</td>
+              <td>Yes (Ad-Free)</td>
+              <td>Yes (Ad-Free)</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-name">Screens at Same Time</td>
+              <td>1 Screen</td>
+              <td>2 Screens</td>
+              <td>4 Screens</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-name">Downloads Available</td>
+              <td>No</td>
+              <td>Yes (30 titles)</td>
+              <td>Yes (Unlimited)</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-name">Audio Quality</td>
+              <td>Stereo 2.0</td>
+              <td>Dolby Digital 5.1</td>
+              <td>Dolby Atmos + Spatial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Mobile App Promotion -->
+    <section class="app-promo-section">
+      <div class="app-promo-card">
+        <div class="app-promo-content">
+          <h2 class="app-promo-title">Take Khazana King Everywhere</h2>
+          <p class="app-promo-desc">Download the mobile app to sync watch histories, access offline downloads, and receive customized release notifications directly to your device.</p>
+          <div class="download-badges">
+            <a href="#download-android" class="download-badge" id="btn-download-android">
+              <span class="badge-logo">🤖</span>
+              <div class="badge-text">
+                <div class="badge-subtitle">Get it on</div>
+                <div class="badge-title">Google Play</div>
+              </div>
+            </a>
+            <a href="#download-ios" class="download-badge" id="btn-download-ios">
+              <span class="badge-logo">🍎</span>
+              <div class="badge-text">
+                <div class="badge-subtitle">Download on the</div>
+                <div class="badge-title">App Store</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="app-promo-image">
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80');"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+      <h2 class="row-title" style="margin: 0 auto 10px; display: inline-block;">User Testimonials</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 25px;">See why millions enjoy streaming on Khazana King.</p>
+      <div class="testimonials-grid" id="testimonials-grid-container"></div>
+    </section>
+
+    <!-- FAQs Accordion Section -->
+    <section class="faq-section">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      <div class="faq-list" id="faq-accordion-list"></div>
+    </section>
+
+    <!-- Newsletter Registration Section -->
+    <section class="newsletter-section">
+      <div class="newsletter-card">
+        <h2 class="newsletter-title">Ready to Watch?</h2>
+        <p class="newsletter-desc">Enter your email to sign up for newsletters, updates on premium content, and subscription offers.</p>
+        <form class="newsletter-form" id="newsletter-subscription-form" onsubmit="event.preventDefault();">
+          <input type="email" class="newsletter-input" id="newsletter-email-input" placeholder="Your Email Address" required>
+          <button type="submit" class="btn btn-primary" id="newsletter-submit-btn">Subscribe</button>
+        </form>
+        <div class="newsletter-success" id="newsletter-success-toast">Awesome! You have successfully subscribed to our newsletter list.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== VIEW 2: MOVIES GRID VIEW ==================== -->
+  <main class="view hidden" id="movies-view">
+    <section class="movie-grid-section">
+      <div class="section-header">
+        <h2 class="row-title">Full Movies Catalog</h2>
+      </div>
+      <div class="movie-grid" id="movies-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 3: WEB SERIES GRID VIEW ==================== -->
+  <main class="view hidden" id="series-view">
+    <section class="movie-grid-section">
+      <div class="section-header">
+        <h2 class="row-title">Full Web Series</h2>
+      </div>
+      <div class="movie-grid" id="series-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 4: LIVE TV EXPANDED VIEW ==================== -->
+  <main class="view hidden" id="live-tv-view">
+    <section class="live-tv-section">
+      <div class="section-header">
+        <h2 class="row-title">Live Broadcast Channels</h2>
+      </div>
+      <div class="live-grid" id="live-tv-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 5: MY LIST VIEW ==================== -->
+  <main class="view hidden" id="my-list-view">
+    <section class="movie-grid-section">
+      <div class="section-header">
+        <h2 class="row-title">My Personal List</h2>
+      </div>
+      <div class="movie-grid" id="mylist-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 6: CATEGORY FILTER VIEW ==================== -->
+  <main class="view hidden" id="categories-view">
+    <section class="movie-grid-section">
+      <div class="section-header">
+        <h2 class="row-title" id="category-view-title">Category Catalog</h2>
+      </div>
+      <div class="movie-grid" id="category-grid-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 7: CONTACT US VIEW ==================== -->
+  <main class="view hidden" id="contact-view">
+    <section class="contact-section">
+      <h2 class="contact-title">Contact Support</h2>
+      <p class="contact-subtitle">Have queries regarding pricing, bills, or connection issues? Drop a message.</p>
+      
+      <div class="contact-grid">
+        <div class="contact-info-column">
+          <div class="contact-info-card">
+            <div class="contact-info-icon">📍</div>
+            <div class="contact-info-details">
+              <h4>Headquarters</h4>
+              <p>108 King Street, Cyber City, Mumbai, India</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-icon">📞</div>
+            <div class="contact-info-details">
+              <h4>Helpline Number</h4>
+              <p>+91 1800 220 900 (Toll Free)</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-icon">✉️</div>
+            <div class="contact-info-details">
+              <h4>Customer Support</h4>
+              <p>support@khazanaking.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <form class="contact-form" id="contact-us-form" onsubmit="event.preventDefault();">
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" class="form-control" id="contact-name" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="contact-email">Your Email</label>
+                <input type="email" class="form-control" id="contact-email" placeholder="john@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact-subject">Subject</label>
+              <input type="text" class="form-control" id="contact-subject" placeholder="Subscription Billing Issue" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea class="form-control form-control-textarea" id="contact-message" placeholder="Type details of your issue..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="contact-form-submit-btn">Send Message</button>
+            <div class="contact-success-msg" id="contact-success-toast">Thank you! Your query has been logged. Our representatives will contact you shortly.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 8: USER DASHBOARD VIEW ==================== -->
+  <main class="view hidden" id="dashboard-view">
+    <section class="dashboard-section">
+      <div class="dashboard-container">
+        
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+          <div class="dashboard-user-card">
+            <div class="dashboard-user-avatar">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80" alt="Avatar" id="dashboard-avatar-preview">
+            </div>
+            <div class="dashboard-user-name" id="dashboard-user-name">Guest User</div>
+            <span class="dashboard-user-plan-badge" id="dashboard-user-plan">Free Trial</span>
+          </div>
+          <ul class="dashboard-menu">
+            <li class="dashboard-menu-item active" id="db-menu-profile" data-panel="panel-profile">👤 Profile details</li>
+            <li class="dashboard-menu-item" id="db-menu-watchlist" data-panel="panel-watchlist">❤️ Watchlist</li>
+            <li class="dashboard-menu-item" id="db-menu-history" data-panel="panel-history">🕒 Watch History</li>
+            <li class="dashboard-menu-item" id="db-menu-billing" data-panel="panel-billing">💳 Subscription & Billing</li>
+            <li class="dashboard-menu-item" id="db-menu-settings" data-panel="panel-settings">⚙️ Settings</li>
+          </ul>
+        </aside>
+
+        <!-- Dynamic Dashboard Panels -->
+        <div class="dashboard-content-panel">
+          
+          <!-- Tab panel: Profile -->
+          <div class="panel-tab-content active" id="panel-profile">
+            <h3 class="panel-title">My Account Profile</h3>
+            <div class="dashboard-settings-form" style="max-width: 450px;">
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="text" class="form-control" id="db-profile-email" disabled value="guest@khazanaking.com">
+              </div>
+              <div class="form-group">
+                <label>Member Since</label>
+                <input type="text" class="form-control" id="db-profile-since" disabled value="June 14, 2026">
+              </div>
+              <div class="form-group">
+                <label>Billing Period Status</label>
+                <p style="font-size:0.9rem; color: #28a745; font-weight: 700;" id="db-profile-active-status">Active Subscription</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab panel: Watchlist -->
+          <div class="panel-tab-content" id="panel-watchlist">
+            <h3 class="panel-title">My Saved Catalog</h3>
+            <div class="movie-grid" id="db-watchlist-grid"></div>
+          </div>
+
+          <!-- Tab panel: Watch History -->
+          <div class="panel-tab-content" id="panel-history">
+            <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center;">
+              <h3>Streaming Watch History</h3>
+              <button class="btn btn-secondary" id="db-clear-history-btn" style="padding: 6px 12px; font-size: 0.8rem;">Clear All</button>
+            </div>
+            <div class="movie-grid" id="db-history-grid"></div>
+          </div>
+
+          <!-- Tab panel: Subscription & Billing -->
+          <div class="panel-tab-content" id="panel-billing">
+            <h3 class="panel-title">Subscription Features</h3>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                <div>
+                  <h4 style="font-size: 1.1rem;" id="db-billing-plan-title">Standard Plan (Monthly)</h4>
+                  <p style="font-size:0.8rem; color: var(--text-secondary);" id="db-billing-plan-expiry">Renews on: July 14, 2026</p>
+                </div>
+                <div style="text-align: right;">
+                  <h4 style="font-size: 1.3rem; color: var(--primary);" id="db-billing-plan-price">₹499/mo</h4>
+                </div>
+              </div>
+              
+              <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <span style="font-size:0.9rem;">Auto-renew subscription status</span>
+                <button class="btn btn-primary" id="db-billing-autorenew-btn" style="padding: 6px 14px; font-size: 0.8rem;">Enabled</button>
+              </div>
+            </div>
+
+            <h4 style="font-size: 1.1rem; margin-bottom: 10px;">Billing & Payment Invoices</h4>
+            <table class="invoices-table">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Date</th>
+                  <th>Plan Details</th>
+                  <th>Amount Paid</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="db-billing-invoices-tbody">
+                <tr>
+                  <td>#INV-8910</td>
+                  <td>14 Jun 2026</td>
+                  <td>Standard Plan (Monthly)</td>
+                  <td>₹499.00</td>
+                  <td><span class="invoice-status-paid">Paid</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tab panel: Settings -->
+          <div class="panel-tab-content" id="panel-settings">
+            <h3 class="panel-title">Account Settings</h3>
+            <form class="dashboard-settings-form" id="db-settings-form" onsubmit="event.preventDefault();">
+              <div class="form-row-double">
+                <div class="form-group">
+                  <label for="settings-fullname">Full Name</label>
+                  <input type="text" class="form-control" id="settings-fullname" value="Guest User">
+                </div>
+                <div class="form-group">
+                  <label for="settings-avatar-select">Choose Avatar Profile</label>
+                  <select class="form-control" id="settings-avatar-select">
+                    <option value="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80">Avatar 1 (Male)</option>
+                    <option value="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80">Avatar 2 (Female)</option>
+                    <option value="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80">Avatar 3 (Male Premium)</option>
+                    <option value="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100&q=80">Avatar 4 (Female Business)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" style="max-width: 450px;">
+                <label for="settings-password">Change Password</label>
+                <input type="password" class="form-control" id="settings-password" placeholder="••••••••">
+              </div>
+              <div class="form-group" style="max-width: 450px;">
+                <label for="settings-password-confirm">Confirm Password</label>
+                <input type="password" class="form-control" id="settings-password-confirm" placeholder="••••••••">
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary" id="db-settings-save-btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 9: ADMIN PANEL VIEW ==================== -->
+  <main class="view hidden" id="admin-view">
+    <section class="admin-section">
+      
+      <div class="admin-header-row">
+        <div>
+          <h2 class="row-title" style="font-size: 1.8rem;">Admin Control Operations</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Khazana King OTT System Management Dashboard</p>
+        </div>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="admin-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon-box">👥</div>
+          <div class="metric-data">
+            <span class="metric-label">Total Users</span>
+            <span class="metric-val" id="admin-metric-users">12,842</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon-box">💰</div>
+          <div class="metric-data">
+            <span class="metric-label">Monthly Revenue</span>
+            <span class="metric-val" id="admin-metric-revenue">₹4,28,490</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon-box">🎥</div>
+          <div class="metric-data">
+            <span class="metric-label">Videos Listed</span>
+            <span class="metric-val" id="admin-metric-movies">18</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon-box">⏳</div>
+          <div class="metric-data">
+            <span class="metric-label">Total Hours Streamed</span>
+            <span class="metric-val" id="admin-metric-hours">84,200 hrs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graphs and Top Users Split -->
+      <div class="admin-charts-row">
+        <div class="chart-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Platform Growth (Weekly Views)</h3>
+          <!-- Custom SVG Chart -->
+          <svg class="chart-container-svg" viewBox="0 0 500 200">
+            <!-- Grid Lines -->
+            <line x1="40" y1="20" x2="480" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+            <line x1="40" y1="70" x2="480" y2="70" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+            <line x1="40" y1="120" x2="480" y2="120" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+            <line x1="40" y1="170" x2="480" y2="170" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+            <!-- SVG Line Graph path -->
+            <path d="M40,150 Q110,130 180,90 T320,50 T480,30" fill="none" stroke="var(--primary)" stroke-width="3"></path>
+            <!-- Data Point dots -->
+            <circle cx="40" cy="150" r="5" fill="var(--primary)"></circle>
+            <circle cx="180" cy="90" r="5" fill="var(--primary)"></circle>
+            <circle cx="320" cy="50" r="5" fill="var(--primary)"></circle>
+            <circle cx="480" cy="30" r="5" fill="var(--primary)"></circle>
+            
+            <text x="40" y="190" fill="var(--text-secondary)" font-size="10" text-anchor="middle">Week 1</text>
+            <text x="180" y="190" fill="var(--text-secondary)" font-size="10" text-anchor="middle">Week 2</text>
+            <text x="320" y="190" fill="var(--text-secondary)" font-size="10" text-anchor="middle">Week 3</text>
+            <text x="480" y="190" fill="var(--text-secondary)" font-size="10" text-anchor="middle">Week 4</text>
+          </svg>
+        </div>
+
+        <div class="chart-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Recent Registrations</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;" id="admin-recent-users-list">
+            <li style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom:8px;">
+              <span>Rohan Das (rohan@das.com)</span>
+              <span style="color:var(--primary); font-weight:700;">PREMIUM</span>
+            </li>
+            <li style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom:8px;">
+              <span>Meera Roy (meera@gmail.com)</span>
+              <span style="color:#28a745;">FREE TRIAL</span>
+            </li>
+            <li style="display:flex; justify-content:space-between; align-items:center;">
+              <span>Kabir Soni (kabir@outlook.com)</span>
+              <span style="color:#ffc107;">STANDARD</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Management Tabs -->
+      <div class="chart-card" style="padding: 20px;">
+        <div class="admin-tabs-nav">
+          <button class="admin-tab-btn active" id="admin-tbtn-add" data-tab="admin-tab-add">➕ Add Video</button>
+          <button class="admin-tab-btn" id="admin-tbtn-catalog" data-tab="admin-tab-catalog">🎥 Catalog List</button>
+          <button class="admin-tab-btn" id="admin-tbtn-users" data-tab="admin-tab-users">👥 Accounts List</button>
+          <button class="admin-tab-btn" id="admin-tbtn-approval" data-tab="admin-tab-approval">🎯 Approvals Queue</button>
+        </div>
+
+        <!-- Tab Panel 1: Add Video Form -->
+        <div class="admin-tab-panel active" id="admin-tab-add">
+          <form class="dashboard-settings-form" id="admin-add-video-form" onsubmit="event.preventDefault();">
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="admin-video-title">Video Title</label>
+                <input type="text" class="form-control" id="admin-video-title" placeholder="e.g. Iron Man 4" required>
+              </div>
+              <div class="form-group">
+                <label for="admin-video-type">Format Type</label>
+                <select class="form-control" id="admin-video-type">
+                  <option value="movie">Movie</option>
+                  <option value="series">Web Series Episode</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="admin-video-genres">Genres (Comma separated)</label>
+                <input type="text" class="form-control" id="admin-video-genres" placeholder="Action, Thriller" required>
+              </div>
+              <div class="form-group">
+                <label for="admin-video-year">Release Year</label>
+                <input type="number" class="form-control" id="admin-video-year" value="2026" required>
+              </div>
+            </div>
+
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="admin-video-lang">Primary Language</label>
+                <input type="text" class="form-control" id="admin-video-lang" value="English" required>
+              </div>
+              <div class="form-group">
+                <label for="admin-video-country">Country of Origin</label>
+                <input type="text" class="form-control" id="admin-video-country" value="USA" required>
+              </div>
+            </div>
+
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="admin-video-duration">Duration (e.g. 2h 15m or 10 Episodes)</label>
+                <input type="text" class="form-control" id="admin-video-duration" value="1h 45m" required>
+              </div>
+              <div class="form-group">
+                <label for="admin-video-rating">Starting Rating</label>
+                <input type="text" class="form-control" id="admin-video-rating" value="8.0" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-video-desc">Detailed Catalog Description</label>
+              <textarea class="form-control form-control-textarea" id="admin-video-desc" placeholder="Provide background plot, overview..." required></textarea>
+            </div>
+
+            <div class="form-row-double">
+              <div class="form-group">
+                <label for="admin-video-banner">High-Res Banner Unsplash URL</label>
+                <input type="url" class="form-control" id="admin-video-banner" value="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80">
+              </div>
+              <div class="form-group">
+                <label for="admin-video-url">Video Stream source (HLS/MP4)</label>
+                <input type="url" class="form-control" id="admin-video-url" value="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" required>
+              </div>
+            </div>
+
+            <div>
+              <button type="submit" class="btn btn-primary" id="admin-add-video-submit-btn">Publish to Catalog</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab Panel 2: Catalog Manager List -->
+        <div class="admin-tab-panel" id="admin-tab-catalog">
+          <table class="admin-list-table">
+            <thead>
+              <tr>
+                <th>Video Title</th>
+                <th>Type</th>
+                <th>Release Year</th>
+                <th>Rating</th>
+                <th>Duration</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-catalog-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Tab Panel 3: Accounts Management -->
+        <div class="admin-tab-panel" id="admin-tab-users">
+          <table class="admin-list-table">
+            <thead>
+              <tr>
+                <th>Full Name</th>
+                <th>Email Address</th>
+                <th>Active Plan</th>
+                <th>Status</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Tab Panel 4: Content Approval Queue -->
+        <div class="admin-tab-panel" id="admin-tab-approval">
+          <table class="admin-list-table">
+            <thead>
+              <tr>
+                <th>Submitted Content</th>
+                <th>Type</th>
+                <th>Submitted By</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Operations</th>
+              </tr>
+            </thead>
+            <tbody id="admin-approval-tbody">
+              <tr>
+                <td><strong>Tears of Steel Redux</strong></td>
+                <td>Movie (Director Edit)</td>
+                <td>Celia (Creator ID: 412)</td>
+                <td>14 Jun 2026</td>
+                <td><span style="color:#ffc107; font-weight:700;">Pending Review</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="admin-action-btn edit" style="border-color:#28a745; color:#28a745;" id="btn-approve-demo">Approve</button>
+                    <button class="admin-action-btn delete" id="btn-reject-demo">Reject</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 10: CUSTOM VIDEO PLAYER VIEW ==================== -->
+  <main class="player-view hidden" id="player-view">
+    <div class="video-player-container" id="video-player-container">
+      
+      <!-- Video Element -->
+      <video id="main-video-player" playsinline preload="auto">
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
+        Your browser does not support HTML5 video streaming feeds.
+      </video>
+
+      <!-- Fallback Canvas for Simulated Playback -->
+      <canvas id="player-canvas-fallback" style="width: 100%; height: 100%; object-fit: contain; display: none; position: absolute; top:0; left:0; z-index:0;"></canvas>
+
+      <!-- Subtitles screen layer -->
+      <div class="player-subtitle-overlay" id="player-subtitle-overlay">Subtitles go here...</div>
+
+      <!-- Auto Play Next Episode Overlay -->
+      <div class="next-episode-overlay-card" id="next-episode-card">
+        <div class="next-title">Up Next</div>
+        <div class="next-name" id="next-episode-name">Tears of Steel Cybernetics</div>
+        <div class="next-autoplay-row">
+          <button class="autoplay-timer-btn" id="next-autoplay-timer-btn">Play in 5s</button>
+          <button class="autoplay-cancel-btn" id="next-autoplay-cancel-btn">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Controls Overlay Layout -->
+      <div class="player-controls-overlay" id="player-controls-overlay">
+        
+        <!-- Top controls row -->
+        <div class="player-top-row">
+          <button class="player-back-btn" id="player-back-btn" title="Back to Browse">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Back to Browse</span>
+          </button>
+          <div class="player-video-title" id="player-video-title">Sintel: Quest for the Dragon</div>
+          <div style="width: 140px;"></div> <!-- visual spacing balance -->
+        </div>
+
+        <!-- Bottom controls row -->
+        <div class="player-bottom-controls">
+          
+          <!-- Scrubber Progress Bar -->
+          <div class="player-progress-area">
+            <span class="player-time-display" id="player-time-current">0:00</span>
+            <div class="player-progress-bar-container" id="player-scrubber-container">
+              <div class="player-progress-filled" id="player-progress-filled">
+                <div class="player-progress-handle"></div>
+              </div>
+            </div>
+            <span class="player-time-display total" id="player-time-total">0:00</span>
+          </div>
+
+          <!-- Buttons Row -->
+          <div class="player-buttons-row">
+            
+            <div class="player-buttons-left">
+              <!-- Play/Pause -->
+              <button class="player-control-btn" id="player-btn-play" title="Play">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </button>
+              
+              <!-- Skip backward 10s -->
+              <button class="player-control-btn" id="player-btn-rewind" title="Rewind 10s">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0-.57-8.38l5.67-5.67"></path></svg>
+              </button>
+              
+              <!-- Skip forward 10s -->
+              <button class="player-control-btn" id="player-btn-forward" title="Forward 10s">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1 .57-8.38l-5.67-5.67"></path></svg>
+              </button>
+
+              <!-- Volume Control -->
+              <div class="player-volume-container">
+                <button class="player-control-btn" id="player-btn-volume" title="Mute/Unmute">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <input type="range" class="player-volume-slider" id="player-volume-slider" min="0" max="1" step="0.1" value="0.8">
+              </div>
+            </div>
+
+            <div class="player-buttons-right">
+              <!-- Picture in Picture -->
+              <button class="player-control-btn" id="player-btn-pip" title="Picture in Picture">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><rect x="12" y="12" width="8" height="8" rx="1" ry="1"></rect></svg>
+              </button>
+
+              <!-- Subtitle Track Menu -->
+              <div class="player-menu-container">
+                <button class="player-control-btn" id="player-btn-subtitles" title="Subtitles Menu">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="7" y1="15" x2="17" y2="15"></line><line x1="7" y1="9" x2="11" y2="9"></line><line x1="14" y1="9" x2="17" y2="9"></line></svg>
+                </button>
+                <div class="player-menu-dropdown" id="player-menu-subtitles">
+                  <button class="player-menu-option active" data-sub="off">Subtitles Off</button>
+                  <button class="player-menu-option" data-sub="en">English</button>
+                  <button class="player-menu-option" data-sub="hi">Hindi</button>
+                  <button class="player-menu-option" data-sub="es">Spanish</button>
+                </div>
+              </div>
+
+              <!-- Playback Speed Menu -->
+              <div class="player-menu-container">
+                <button class="player-control-btn" id="player-btn-speed" title="Speed Menu" style="font-size: 0.95rem; font-weight:700; border: 1.5px solid white; padding: 2px 6px; border-radius: 4px;">
+                  1.0x
+                </button>
+                <div class="player-menu-dropdown" id="player-menu-speed">
+                  <button class="player-menu-option" data-speed="0.5">0.5x Slow</button>
+                  <button class="player-menu-option active" data-speed="1.0">1.0x Normal</button>
+                  <button class="player-menu-option" data-speed="1.25">1.25x</button>
+                  <button class="player-menu-option" data-speed="1.5">1.5x Fast</button>
+                  <button class="player-menu-option" data-speed="2.0">2.0x Double</button>
+                </div>
+              </div>
+
+              <!-- Stream Quality Menu -->
+              <div class="player-menu-container">
+                <button class="player-control-btn" id="player-btn-quality" title="Quality Settings" style="font-size: 0.8rem; font-weight:700; border: 1.5px solid white; padding: 2px 6px; border-radius: 4px;">
+                  Auto
+                </button>
+                <div class="player-menu-dropdown" id="player-menu-quality">
+                  <button class="player-menu-option active" data-qual="Auto">Auto HD</button>
+                  <button class="player-menu-option" data-qual="1080p">1080p FHD</button>
+                  <button class="player-menu-option" data-qual="720p">720p HD</button>
+                  <button class="player-menu-option" data-qual="480p">480p SD</button>
+                </div>
+              </div>
+
+              <!-- Fullscreen Toggle -->
+              <button class="player-control-btn" id="player-btn-fullscreen" title="Full Screen">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== MODAL: DYNAMIC MOVIE DETAILS ==================== -->
+  <div class="modal-overlay" id="details-modal">
+    <div class="modal-box details-modal-box">
+      <button class="modal-close-btn" id="details-modal-close" title="Close modal">✕</button>
+      <div class="details-modal-banner" id="details-modal-banner">
+        <div class="details-banner-content">
+          <div class="hero-badge" id="details-badge">Feature</div>
+          <h2 class="hero-title" id="details-title" style="font-size:2rem; margin-bottom: 5px;">Movie Details Title</h2>
+          <p style="font-style:italic; font-size: 0.85rem; color:#ccc;" id="details-tagline">Movie tagline details...</p>
+          <div class="details-banner-actions">
+            <button class="btn btn-primary" id="details-play-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Watch Now
+            </button>
+            <button class="btn btn-secondary" id="details-watchlist-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              My List
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="details-modal-body">
+        <div class="details-text-left">
+          <div class="details-meta-row">
+            <span class="card-rating" id="details-rating">★ 9.0</span>
+            <span id="details-year">2026</span>
+            <span class="details-meta-badge" id="details-age">U/A 13+</span>
+            <span id="details-duration">2h 15m</span>
+          </div>
+          <p class="details-desc" id="details-description">
+            Plot summary description goes here. Highly engaging copy that reviews why viewers enjoy this content.
+          </p>
+        </div>
+        <div class="details-info-right">
+          <div class="details-info-item">
+            <span>Cast: </span>
+            <span id="details-cast">Actor 1, Actor 2</span>
+          </div>
+          <div class="details-info-item">
+            <span>Genres: </span>
+            <span id="details-genres">Action, Adventure</span>
+          </div>
+          <div class="details-info-item">
+            <span>Languages: </span>
+            <span id="details-lang">English, Hindi</span>
+          </div>
+          <div class="details-info-item">
+            <span>Country: </span>
+            <span id="details-country">India</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: INTERACTIVE AUTHENTICATION ==================== -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="auth-modal-close" title="Close modal">✕</button>
+      
+      <div class="auth-header">
+        <h3 style="font-size: 1.5rem; color: var(--primary);" id="auth-logo-title">Khazana King</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top:4px;">Join the ultimate streaming experience</p>
+      </div>
+
+      <div class="auth-tabs" id="auth-tabs-row">
+        <button class="auth-tab-btn active" id="auth-tab-signin-trigger">Sign In</button>
+        <button class="auth-tab-btn" id="auth-tab-signup-trigger">Sign Up</button>
+      </div>
+
+      <!-- Sign In Form Panel -->
+      <div class="auth-form-wrapper active" id="form-signin-wrapper">
+        <form class="dashboard-settings-form" id="auth-signin-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="signin-email">Email Address</label>
+            <input type="email" class="form-control" id="signin-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signin-password">Password</label>
+            <input type="password" class="form-control" id="signin-password" placeholder="••••••••" required>
+          </div>
+          <a href="#forgot" class="forgot-password-link" id="auth-btn-forgot-password">Forgot Password?</a>
+          <button type="submit" class="btn btn-primary" id="auth-signin-submit-btn" style="width:100%;">Sign In</button>
+        </form>
+      </div>
+
+      <!-- Sign Up Form Panel -->
+      <div class="auth-form-wrapper" id="form-signup-wrapper">
+        <form class="dashboard-settings-form" id="auth-signup-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" class="form-control" id="signup-name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <input type="email" class="form-control" id="signup-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Choose Password</label>
+            <input type="password" class="form-control" id="signup-password" placeholder="Min. 8 characters" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="auth-signup-submit-btn" style="width:100%;">Register</button>
+        </form>
+      </div>
+
+      <!-- Forgot Password Panel -->
+      <div class="auth-form-wrapper" id="form-forgot-wrapper">
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:15px;">Enter email to receive password reset link.</p>
+        <form class="dashboard-settings-form" id="auth-forgot-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="forgot-email">Email Address</label>
+            <input type="email" class="form-control" id="forgot-email" placeholder="you@example.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="auth-forgot-submit-btn" style="width:100%;">Send Code</button>
+        </form>
+      </div>
+
+      <!-- Email Verification / OTP Panel -->
+      <div class="auth-form-wrapper" id="form-otp-wrapper">
+        <p style="font-size:0.85rem; color:var(--text-secondary); text-align:center;" id="otp-instruction-text">We have sent a 4-digit verification code to your email. Enter it below:</p>
+        <form class="dashboard-settings-form" id="auth-otp-form" onsubmit="event.preventDefault();">
+          <div class="otp-box-container">
+            <input type="text" class="form-control otp-input" maxlength="1" required id="otp-1">
+            <input type="text" class="form-control otp-input" maxlength="1" required id="otp-2">
+            <input type="text" class="form-control otp-input" maxlength="1" required id="otp-3">
+            <input type="text" class="form-control otp-input" maxlength="1" required id="otp-4">
+          </div>
+          <button type="submit" class="btn btn-primary" id="auth-otp-submit-btn" style="width:100%;">Verify & Sign In</button>
+        </form>
+      </div>
+
+      <!-- Social Logins Section -->
+      <div id="auth-social-row">
+        <div style="display:flex; align-items:center; margin: 20px 0; gap:10px;">
+          <div style="flex:1; height:1px; background:var(--border-color);"></div>
+          <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase;">Or continue with</span>
+          <div style="flex:1; height:1px; background:var(--border-color);"></div>
+        </div>
+        <div class="social-login-row">
+          <button class="btn-social" id="auth-social-google">
+            <span>🌐</span> Google
+          </button>
+          <button class="btn-social" id="auth-social-facebook">
+            <span>📘</span> Facebook
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: PREMIUM CHECKOUT PAYMENT ==================== -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-box payment-modal-box">
+      <button class="modal-close-btn" id="checkout-modal-close" title="Close modal">✕</button>
+      
+      <h3 style="font-size:1.3rem; margin-bottom: 15px;">Complete Subscription Payment</h3>
+      
+      <div class="payment-plan-summary">
+        <div>
+          <span style="font-size:0.75rem; color: var(--text-secondary); text-transform:uppercase; font-weight:700;">Selected Plan</span>
+          <h4 id="checkout-summary-name">Standard Plan</h4>
+        </div>
+        <div style="text-align:right;">
+          <span class="payment-plan-price" id="checkout-summary-price">₹499/mo</span>
+        </div>
+      </div>
+
+      <!-- Payment Option Selection Tabs -->
+      <div class="payment-method-selector">
+        <button class="btn-payment-method active" id="pay-method-card" data-method="card">
+          <span>💳</span> Credit/Debit Card
+        </button>
+        <button class="btn-payment-method" id="pay-method-upi" data-method="upi">
+          <span>📱</span> UPI / App Payment
+        </button>
+      </div>
+
+      <!-- Form: Card Payment -->
+      <div class="payment-form-area active" id="pay-form-card">
+        <form class="dashboard-settings-form" id="checkout-card-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text" class="form-control" id="card-number" placeholder="4111 2222 3333 4444" required>
+          </div>
+          <div class="form-row-double">
+            <div class="form-group">
+              <label for="card-expiry">Expiry Date</label>
+              <input type="text" class="form-control" id="card-expiry" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+              <label for="card-cvv">CVV</label>
+              <input type="password" class="form-control" id="card-cvv" placeholder="•••" maxlength="3" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="checkout-pay-card-btn" style="width:100%; margin-top: 10px;">Pay Securely</button>
+        </form>
+      </div>
+
+      <!-- Form: UPI payment -->
+      <div class="payment-form-area" id="pay-form-upi">
+        <p style="font-size: 0.85rem; color:var(--text-secondary); text-align:center;">Scan the QR code below using any UPI App (GPay, PhonePe, BHIM) to pay securely:</p>
+        <div class="upi-qr-mock">
+          <div class="upi-qr-image"></div>
+          <div class="upi-qr-caption">KHAZANA KING UPI</div>
+        </div>
+        <div style="display:flex; justify-content:center; margin: 10px 0;">
+          <span style="font-weight:600; font-size:0.85rem; color:#888;">OR</span>
+        </div>
+        <form class="dashboard-settings-form" id="checkout-upi-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="upi-id">Enter UPI ID</label>
+            <input type="text" class="form-control" id="upi-id" placeholder="username@okhdfcbank" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="checkout-pay-upi-btn" style="width:100%;">Verify & Pay</button>
+        </form>
+      </div>
+
+      <!-- Spinner for Processing Status -->
+      <div class="payment-processing-overlay" id="checkout-processing-overlay">
+        <div class="spinner"></div>
+        <p style="font-weight:600; font-size:0.9rem;" id="checkout-status-text">Processing Transaction...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER SECTION ==================== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="#home" class="logo" id="footer-logo">
+          Khazana <span>King</span>
+        </a>
+        <p class="footer-brand-desc">The ultimate digital destination for unlimited high-quality movies, TV shows, and live sports. Subscribe to Khazana King OTT and stream premium content on any device in stunning 4K HDR quality.</p>
+        <div class="social-links">
+          <a href="#fb" class="social-icon-btn" title="Facebook"><span>📘</span></a>
+          <a href="#tw" class="social-icon-btn" title="Twitter"><span>🐦</span></a>
+          <a href="#ig" class="social-icon-btn" title="Instagram"><span>📸</span></a>
+          <a href="#yt" class="social-icon-btn" title="YouTube"><span>📺</span></a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Browse Content</h4>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#movies">Trending Movies</a></li>
+          <li class="footer-link"><a href="#series">Popular Series</a></li>
+          <li class="footer-link"><a href="#live-tv">Live News & Channels</a></li>
+          <li class="footer-link"><a href="#categories">Genre Categories</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">My Account</h4>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#dashboard">My Profile Dashboard</a></li>
+          <li class="footer-link"><a href="#my-list">Watchlist History</a></li>
+          <li class="footer-link"><a href="#plans">Subscription details</a></li>
+          <li class="footer-link"><a href="#contact">Customer Settings</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Help & Support</h4>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#faq">FAQ Documentation</a></li>
+          <li class="footer-link"><a href="#contact">Contact Support Centre</a></li>
+          <li class="footer-link"><a href="#status">Server Status (99.9%)</a></li>
+          <li class="footer-link"><a href="#sitemap">XML Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Legal Terms</h4>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#privacy">Privacy Policy</a></li>
+          <li class="footer-link"><a href="#terms">Terms & Conditions</a></li>
+          <li class="footer-link"><a href="#refund">Refund Policy</a></li>
+          <li class="footer-link"><a href="#cookies">Cookie Preferences</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Khazana King OTT Streaming Platform. All rights reserved. Built as a premium mock engineering project.</p>
+      <p>Designed for multi-device compatibility (4K, Mobile, Tablet, PC)</p>
+    </div>
+  </footer>
+
+  <!-- JS Database Catalog file -->
+  <script src="data.js"></script>
+  <!-- JS Interactive Logic Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

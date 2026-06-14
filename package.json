@@ -1,0 +1,13 @@
+{
+  "name": "khazana-king-ott",
+  "version": "1.0.0",
+  "description": "Premium OTT Streaming Platform website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 3000"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
