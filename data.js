@@ -1,5 +1,6 @@
 // Khazana King OTT - Catalog Database
 
+
 window.movieData = [
   // FEATURED & TRENDING MOVIES
   {
