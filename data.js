@@ -3,6 +3,7 @@
 window.movieData = [
   // FEATURED & TRENDING MOVIES
   {
+    
     id: "m1",
     title: "Sintel: Quest for the Dragon",
     type: "movie",
