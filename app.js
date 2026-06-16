@@ -112,10 +112,7 @@ function getRouteParams() {
 
 function router() {
   const { route, params } = getRouteParams();
-  
-  // Hide all main page views
-  document.querySelectorAll('.view').forEach(view => view.classList.add('hidden'));
-  
+
   // Remove active navbar links styling
   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
   document.querySelectorAll('.mobile-item').forEach(item => item.classList.remove('active'));
@@ -168,17 +165,19 @@ function router() {
 
   let finalRoute = route;
 
+  const publicRoutes = ['#landing', '#contact', '#privacy', '#terms', '#refund', '#faq'];
+
   // ROUTE LOCKS
   if (!isLoggedIn) {
     // Guest flow
-    if (route !== '#landing' && route !== '#contact') {
+    if (!publicRoutes.includes(route)) {
       finalRoute = '#landing';
       window.location.hash = '#landing';
       return;
     }
   } else if (!isSubscribed) {
     // Logged in but not paid subscription funnel
-    if (route !== '#plans' && route !== '#contact' && route !== '#dashboard') {
+    if (!['#plans', '#dashboard', ...publicRoutes].includes(route)) {
       finalRoute = '#plans';
       window.location.hash = '#plans';
       return;
@@ -191,6 +190,9 @@ function router() {
       return;
     }
   }
+
+  // Hide all main page views once route is confirmed
+  document.querySelectorAll('.view').forEach(view => view.classList.add('hidden'));
 
   // Load appropriate view
   switch (finalRoute) {
@@ -248,6 +250,19 @@ function router() {
     case '#contact':
       document.getElementById('contact-view').classList.remove('hidden');
       break;
+    case '#terms':
+      document.getElementById('terms-view').classList.remove('hidden');
+      break;
+    case '#privacy':
+      document.getElementById('privacy-view').classList.remove('hidden');
+      break;
+    case '#refund':
+      document.getElementById('refund-view').classList.remove('hidden');
+      break;
+    case '#faq':
+      document.getElementById('faq-view').classList.remove('hidden');
+      renderPublicFAQs();
+      break;
     default:
       if (isSubscribed) {
         window.location.hash = '#home';
@@ -258,6 +273,7 @@ function router() {
 
   // Auto scroll top when shifting pages
   window.scrollTo({ top: 0, behavior: 'instant' });
+  updateLegalNavHighlight(finalRoute);
 }
 
 // 2. Data catalog aggregation
@@ -565,6 +581,55 @@ window.toggleLandingFAQAccordion = function(index) {
     item.classList.add('active');
   }
 };
+
+function renderPublicFAQs() {
+  const container = document.getElementById('public-faq-accordion-list');
+  if (!container || !window.faqs) return;
+
+  container.innerHTML = window.faqs.map((faq, index) => `
+    <div class="faq-item" id="public-faq-item-${index}">
+      <button class="faq-question-btn" onclick="togglePublicFAQAccordion(${index})">
+        <span>${faq.question}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">${faq.answer}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.togglePublicFAQAccordion = function(index) {
+  const item = document.getElementById(`public-faq-item-${index}`);
+  if (!item) return;
+
+  const isActive = item.classList.contains('active');
+  document.querySelectorAll('#public-faq-accordion-list .faq-item').forEach(f => f.classList.remove('active'));
+
+  if (!isActive) {
+    item.classList.add('active');
+  }
+};
+
+function initFooterNavigation() {
+  // Only intercept in-app hash routes (not .html legal pages)
+  const navigate = (e) => {
+    const link = e.target.closest('a[data-route]');
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+    if (href.endsWith('.html')) return;
+    e.preventDefault();
+    window.location.hash = link.dataset.route;
+  };
+
+  document.querySelector('.landing-footer-links')?.addEventListener('click', navigate);
+}
+
+function updateLegalNavHighlight(route) {
+  document.querySelectorAll('.legal-nav-link').forEach(link => {
+    link.classList.toggle('active', link.dataset.route === route);
+  });
+}
 
 // Hero Carousel Slider logic
 let heroIndex = 0;
@@ -1467,6 +1532,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Route initialization
   window.addEventListener('hashchange', router);
+  initFooterNavigation();
   router();
 
   // Scroll solid navbar styling
