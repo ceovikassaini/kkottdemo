@@ -1,4 +1,4 @@
-const CACHE_NAME = 'khazana-king-ott-v1';
+const CACHE_NAME = 'khazana-king-ott-v7';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

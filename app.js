@@ -19,6 +19,8 @@ const state = {
   ],
   customMovies: JSON.parse(localStorage.getItem('khazana_custom_movies')) || [],
   billingInvoices: JSON.parse(localStorage.getItem('khazana_invoices')) || [],
+  deletedDefaultMovies: JSON.parse(localStorage.getItem('khazana_deleted_movies')) || [],
+  editingVideoId: null,
   currentView: "landing",
   activeFilters: { genre: "", language: "", year: "", rating: "", country: "" },
   searchQuery: "",
@@ -130,10 +132,12 @@ function router() {
   const navSearch = document.querySelector('.nav-search-container');
   const navNotifications = document.querySelector('.notification-container');
   const signInBtn = document.getElementById('nav-signin-btn');
+  const signUpBtn = document.getElementById('nav-signup-btn');
   const profileBtn = document.getElementById('nav-profile-btn');
 
   if (isLoggedIn) {
-    signInBtn.style.display = 'none';
+    if (signInBtn) signInBtn.style.display = 'none';
+    if (signUpBtn) signUpBtn.style.display = 'none';
     profileBtn.style.display = 'block';
     
     const avatarSrc = state.currentUser.avatar || DEFAULT_USER.avatar;
@@ -147,7 +151,8 @@ function router() {
       document.getElementById('dropdown-link-admin').style.display = 'none';
     }
   } else {
-    signInBtn.style.display = 'block';
+    if (signInBtn) signInBtn.style.display = 'block';
+    if (signUpBtn) signUpBtn.style.display = 'block';
     profileBtn.style.display = 'none';
     document.getElementById('dropdown-link-admin').style.display = 'none';
   }
@@ -165,7 +170,7 @@ function router() {
 
   let finalRoute = route;
 
-  const publicRoutes = ['#landing', '#contact', '#privacy', '#terms', '#refund', '#faq'];
+  const publicRoutes = ['#landing', '#contact', '#privacy', '#terms', '#refund', '#faq', '#about'];
 
   // ROUTE LOCKS
   if (!isLoggedIn) {
@@ -177,7 +182,7 @@ function router() {
     }
   } else if (!isSubscribed) {
     // Logged in but not paid subscription funnel
-    if (!['#plans', '#dashboard', ...publicRoutes].includes(route)) {
+    if (route === '#landing' || !['#plans', '#dashboard', ...publicRoutes].includes(route)) {
       finalRoute = '#plans';
       window.location.hash = '#plans';
       return;
@@ -199,6 +204,7 @@ function router() {
     case '#landing':
       document.getElementById('landing-view').classList.remove('hidden');
       renderLandingFAQs();
+      renderLandingTrendingMovies();
       break;
     case '#plans':
       document.getElementById('plans-selection-view').classList.remove('hidden');
@@ -259,6 +265,11 @@ function router() {
     case '#refund':
       document.getElementById('refund-view').classList.remove('hidden');
       break;
+    case '#about':
+      document.getElementById('about-view').classList.remove('hidden');
+      document.getElementById('nav-link-about')?.classList.add('active');
+      document.getElementById('mobile-link-about')?.classList.add('active');
+      break;
     case '#faq':
       document.getElementById('faq-view').classList.remove('hidden');
       renderPublicFAQs();
@@ -278,7 +289,10 @@ function router() {
 
 // 2. Data catalog aggregation
 function getFullCatalog() {
-  return [...window.movieData, ...state.customMovies];
+  return [
+    ...window.movieData.filter(m => !state.deletedDefaultMovies.includes(m.id)),
+    ...state.customMovies
+  ];
 }
 
 // 3. UI rendering engines
@@ -398,10 +412,8 @@ function renderPricingPlans() {
   if (!container) return;
 
   container.innerHTML = window.subscriptionPlans.map(plan => {
-    const price = state.isYearlyBilling 
-      ? Math.floor(plan.yearlyPrice) 
-      : plan.monthlyPrice;
-    const period = state.isYearlyBilling ? '/year' : '/mo';
+    const price = plan.price;
+    const validity = plan.validity;
     const isPopularClass = plan.popular ? 'popular' : '';
     const popularBadge = plan.popular ? `<span class="popular-badge">Best Value</span>` : '';
 
@@ -413,7 +425,7 @@ function renderPricingPlans() {
           <div class="plan-price-box">
             <span class="plan-currency">₹</span>
             <span class="plan-price">${price}</span>
-            <span class="plan-period">${period}</span>
+            <span class="plan-period">/ ${validity}</span>
           </div>
         </div>
         <ul class="plan-features-list">
@@ -452,10 +464,8 @@ function renderPlansSelectionView() {
   if (!container) return;
 
   container.innerHTML = window.subscriptionPlans.map(plan => {
-    const price = state.isYearlyBilling 
-      ? Math.floor(plan.yearlyPrice) 
-      : plan.monthlyPrice;
-    const period = state.isYearlyBilling ? '/year' : '/mo';
+    const price = plan.price;
+    const validity = plan.validity;
     const isPopularClass = plan.popular ? 'popular' : '';
     const popularBadge = plan.popular ? `<span class="popular-badge">Best Value</span>` : '';
 
@@ -467,7 +477,7 @@ function renderPlansSelectionView() {
           <div class="plan-price-box">
             <span class="plan-currency">₹</span>
             <span class="plan-price">${price}</span>
-            <span class="plan-period">${period}</span>
+            <span class="plan-period">/ ${validity}</span>
           </div>
         </div>
         <ul class="plan-features-list">
@@ -565,6 +575,31 @@ function renderLandingFAQs() {
       </button>
       <div class="faq-answer">
         <div class="faq-answer-inner">${faq.answer}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Landing Page Trending Content Preview
+function renderLandingTrendingMovies() {
+  const container = document.getElementById('landing-trending-grid');
+  if (!container) return;
+
+  const trending = getFullCatalog().slice(0, 5);
+  container.innerHTML = trending.map(item => `
+    <div class="movie-card" onclick="openAuthModal('signup')">
+      <div class="movie-thumbnail-wrapper">
+        <img class="movie-thumbnail" src="${item.thumbnail}" alt="${item.title}">
+        <div class="movie-card-overlay">
+          <div class="play-btn-circle">▶</div>
+        </div>
+      </div>
+      <div class="movie-info">
+        <h4 class="movie-card-title">${item.title}</h4>
+        <div class="movie-meta-row">
+          <span>${item.year}</span>
+          <span class="rating-badge">★ ${item.rating}</span>
+        </div>
       </div>
     </div>
   `).join('');
@@ -956,10 +991,8 @@ function initiatePlanCheckout(planId) {
   const modal = document.getElementById('checkout-modal');
   document.getElementById('checkout-summary-name').textContent = pendingCheckoutPlan.name;
   
-  const price = state.isYearlyBilling 
-    ? pendingCheckoutPlan.yearlyPrice 
-    : pendingCheckoutPlan.monthlyPrice;
-  const period = state.isYearlyBilling ? '/yr' : '/mo';
+  const price = pendingCheckoutPlan.price;
+  const period = ` / ${pendingCheckoutPlan.validity}`;
   
   document.getElementById('checkout-summary-price').textContent = `₹${price}${period}`;
   
@@ -1020,8 +1053,11 @@ window.playVideo = function(id) {
     }
     video.play().catch(e => {
       console.log("Autoplay block", e);
-      // Auto fallback to visualizer on autoplay failure
-      triggerCanvasPlaybackFallback(item.title);
+      if (e.name === 'NotAllowedError') {
+        showPlayerPlayOverlay(item.title);
+      } else {
+        triggerCanvasPlaybackFallback(item.title);
+      }
     });
     updatePlayerTimeDisplay();
   };
@@ -1049,6 +1085,27 @@ window.playVideo = function(id) {
   clearInterval(subtitleTimer);
   subtitleTimer = setInterval(trackSubtitles, 500);
 };
+
+function showPlayerPlayOverlay(title) {
+  let playOverlay = document.getElementById('player-autoplay-block-overlay');
+  if (!playOverlay) {
+    playOverlay = document.createElement('div');
+    playOverlay.id = 'player-autoplay-block-overlay';
+    playOverlay.className = 'player-autoplay-block-overlay';
+    playOverlay.innerHTML = `
+      <div class="autoplay-block-content" style="text-align:center;">
+        <button class="autoplay-block-play-btn" id="autoplay-block-play-btn" style="background:var(--primary); color:white; width:80px; height:80px; border-radius:50%; font-size:2.2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; transition:transform 0.2s; box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);">▶</button>
+        <p class="autoplay-block-text" style="font-size:1.1rem; font-weight:600; color:white; text-shadow:0 2px 4px rgba(0,0,0,0.8);">Click to Play "${title}"</p>
+      </div>
+    `;
+    document.getElementById('video-player-container').appendChild(playOverlay);
+    document.getElementById('autoplay-block-play-btn').addEventListener('click', () => {
+      playOverlay.remove();
+      const video = document.getElementById('main-video-player');
+      video.play().catch(err => console.log(err));
+    });
+  }
+}
 
 // Canvas Render Fallback Loop (Simulated Playback & Audio wave)
 function triggerCanvasPlaybackFallback(movieTitle) {
@@ -1216,6 +1273,10 @@ function exitPlayer() {
   clearInterval(window.playbackLogInterval);
   clearInterval(subtitleTimer);
   cancelAnimationFrame(canvasAnimationId);
+  cancelNextEpisodeAutoplay();
+  
+  const blockOverlay = document.getElementById('player-autoplay-block-overlay');
+  if (blockOverlay) blockOverlay.remove();
   
   const video = document.getElementById('main-video-player');
   video.pause();
@@ -1405,7 +1466,7 @@ function renderDashboardData() {
   document.getElementById('db-billing-plan-title').textContent = `${state.currentUser.plan}`;
   
   const activePlan = window.subscriptionPlans.find(p => p.name === state.currentUser.plan);
-  const planPriceText = activePlan ? `₹${activePlan.monthlyPrice}/mo` : '₹0.00';
+  const planPriceText = activePlan ? `₹${activePlan.price} / ${activePlan.validity}` : '₹0.00';
   document.getElementById('db-billing-plan-price').textContent = planPriceText;
   
   document.getElementById('db-billing-autorenew-btn').textContent = state.currentUser.autoRenew ? 'Enabled (Cancel)' : 'Disabled (Enable)';
@@ -1481,7 +1542,10 @@ window.deleteVideoItem = function(id) {
     if (isCustom) {
       state.customMovies = state.customMovies.filter(m => m.id !== id);
     } else {
-      window.movieData = window.movieData.filter(m => m.id !== id);
+      if (!state.deletedDefaultMovies.includes(id)) {
+        state.deletedDefaultMovies.push(id);
+        localStorage.setItem('khazana_deleted_movies', JSON.stringify(state.deletedDefaultMovies));
+      }
     }
     saveState();
     renderAdminDashboard();
@@ -1493,6 +1557,8 @@ window.deleteVideoItem = function(id) {
 window.editVideoDetails = function(id) {
   const item = getFullCatalog().find(m => m.id === id);
   if (!item) return;
+
+  state.editingVideoId = id;
 
   document.getElementById('admin-video-title').value = item.title;
   document.getElementById('admin-video-type').value = item.type;
@@ -1657,9 +1723,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     mainSuggestions.classList.add('show');
 
-    renderCarousel('row-trending', m => m.trending && m.title.toLowerCase().includes(q), 'Trending Matches');
-    renderCarousel('row-latest', m => m.isLatest && m.title.toLowerCase().includes(q), 'Latest Matches');
-    renderCarousel('row-popular', m => m.popular && m.title.toLowerCase().includes(q), 'Popular Matches');
+    const filterFn = (m) => m.title.toLowerCase().includes(q) || m.genres.some(g => g.toLowerCase().includes(q)) || (m.cast && m.cast.some(c => c.toLowerCase().includes(q)));
+    renderCarousel('row-trending', m => m.trending && filterFn(m), 'Trending Matches');
+    renderCarousel('row-latest', m => m.isLatest && filterFn(m), 'Latest Matches');
+    renderCarousel('row-popular', m => m.popular && filterFn(m), 'Popular Matches');
+    renderCarousel('row-toprated', m => m.topRated && filterFn(m), 'Top Rated Matches');
+    renderCarousel('row-recommended', m => m.recommended && filterFn(m), 'Recommended Matches');
+    renderCarousel('row-continue-watching', m => state.watchHistory.some(h => h.id === m.id) && filterFn(m), 'Continue Watching Matches');
   });
 
   document.addEventListener('click', (e) => {
@@ -1691,34 +1761,42 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Monthly vs Yearly Pricing Toggles
-  document.getElementById('billing-toggle-monthly').addEventListener('click', () => {
-    document.getElementById('billing-toggle-monthly').classList.add('active');
-    document.getElementById('billing-toggle-yearly').classList.remove('active');
-    state.isYearlyBilling = false;
-    renderPricingPlans();
-  });
+  const billingToggleMonthly = document.getElementById('billing-toggle-monthly');
+  const billingToggleYearly = document.getElementById('billing-toggle-yearly');
+  if (billingToggleMonthly && billingToggleYearly) {
+    billingToggleMonthly.addEventListener('click', () => {
+      billingToggleMonthly.classList.add('active');
+      billingToggleYearly.classList.remove('active');
+      state.isYearlyBilling = false;
+      renderPricingPlans();
+    });
 
-  document.getElementById('billing-toggle-yearly').addEventListener('click', () => {
-    document.getElementById('billing-toggle-monthly').classList.remove('active');
-    document.getElementById('billing-toggle-yearly').classList.add('active');
-    state.isYearlyBilling = true;
-    renderPricingPlans();
-  });
+    billingToggleYearly.addEventListener('click', () => {
+      billingToggleMonthly.classList.remove('active');
+      billingToggleYearly.classList.add('active');
+      state.isYearlyBilling = true;
+      renderPricingPlans();
+    });
+  }
 
   // Pricing Selection Monthly/Yearly triggers
-  document.getElementById('plans-sel-toggle-monthly').addEventListener('click', () => {
-    document.getElementById('plans-sel-toggle-monthly').classList.add('active');
-    document.getElementById('plans-sel-toggle-yearly').classList.remove('active');
-    state.isYearlyBilling = false;
-    renderPlansSelectionView();
-  });
+  const plansSelToggleMonthly = document.getElementById('plans-sel-toggle-monthly');
+  const plansSelToggleYearly = document.getElementById('plans-sel-toggle-yearly');
+  if (plansSelToggleMonthly && plansSelToggleYearly) {
+    plansSelToggleMonthly.addEventListener('click', () => {
+      plansSelToggleMonthly.classList.add('active');
+      plansSelToggleYearly.classList.remove('active');
+      state.isYearlyBilling = false;
+      renderPlansSelectionView();
+    });
 
-  document.getElementById('plans-sel-toggle-yearly').addEventListener('click', () => {
-    document.getElementById('plans-sel-toggle-monthly').classList.remove('active');
-    document.getElementById('plans-sel-toggle-yearly').classList.add('active');
-    state.isYearlyBilling = true;
-    renderPlansSelectionView();
-  });
+    plansSelToggleYearly.addEventListener('click', () => {
+      plansSelToggleMonthly.classList.remove('active');
+      plansSelToggleYearly.classList.add('active');
+      state.isYearlyBilling = true;
+      renderPlansSelectionView();
+    });
+  }
 
   // Landing Form: Pre-fill Email and Open Signup
   const landingForm = document.getElementById('landing-email-form');
@@ -1740,7 +1818,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('details-modal-close').addEventListener('click', closeDetailsModal);
   document.getElementById('checkout-modal-close').addEventListener('click', closeCheckoutModal);
 
-  document.getElementById('nav-signin-btn').addEventListener('click', () => openAuthModal('signin'));
+  const navSignInBtn = document.getElementById('nav-signin-btn');
+  if (navSignInBtn) {
+    navSignInBtn.addEventListener('click', () => openAuthModal('signin'));
+  }
+  const navSignUpBtn = document.getElementById('nav-signup-btn');
+  if (navSignUpBtn) {
+    navSignUpBtn.addEventListener('click', () => openAuthModal('signup'));
+  }
 
   // Sign In submit
   document.getElementById('auth-signin-form').addEventListener('submit', (e) => {
@@ -1839,8 +1924,8 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         state.currentUser.plan = pendingCheckoutPlan.name;
         
-        const price = state.isYearlyBilling ? pendingCheckoutPlan.yearlyPrice : pendingCheckoutPlan.monthlyPrice;
-        const periodText = state.isYearlyBilling ? "Yearly" : "Monthly";
+        const price = pendingCheckoutPlan.price;
+        const periodText = pendingCheckoutPlan.validity;
         const newInvoice = {
           id: `INV-${Math.floor(1000 + Math.random() * 9000)}`,
           date: "14 Jun 2026",
@@ -2095,7 +2180,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Admin Video Form submit
   document.getElementById('admin-add-video-form').addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -2111,34 +2195,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('admin-video-banner').value || "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80";
     const streamUrl = document.getElementById('admin-video-url').value;
 
-    const newVideo = {
-      id: `custom-${Math.floor(1000 + Math.random() * 9000)}`,
-      title: title,
-      type: type,
-      description: desc,
-      rating: rating,
-      year: year,
-      genres: genres,
-      language: lang,
-      country: country,
-      duration: duration,
-      banner: banner,
-      thumbnail: banner,
-      videoUrl: streamUrl,
-      cast: ["Creator Cast"],
-      trending: false,
-      popular: false,
-      topRated: false,
-      recommended: false,
-      isLatest: true
-    };
-
-    state.customMovies.unshift(newVideo);
+    if (state.editingVideoId) {
+      const idxCustom = state.customMovies.findIndex(m => m.id === state.editingVideoId);
+      const idxDefault = window.movieData.findIndex(m => m.id === state.editingVideoId);
+      const updatedVideo = {
+        id: state.editingVideoId,
+        title: title,
+        type: type,
+        description: desc,
+        rating: rating,
+        year: year,
+        genres: genres,
+        language: lang,
+        country: country,
+        duration: duration,
+        banner: banner,
+        thumbnail: banner,
+        videoUrl: streamUrl,
+        cast: ["Creator Cast"],
+        trending: false,
+        popular: false,
+        topRated: false,
+        recommended: false,
+        isLatest: true
+      };
+      if (idxCustom > -1) {
+        state.customMovies[idxCustom] = updatedVideo;
+      } else if (idxDefault > -1) {
+        window.movieData[idxDefault] = updatedVideo;
+      }
+      state.editingVideoId = null;
+      showToast(`Updated: ${title}`);
+    } else {
+      const newVideo = {
+        id: `custom-${Math.floor(1000 + Math.random() * 9000)}`,
+        title: title,
+        type: type,
+        description: desc,
+        rating: rating,
+        year: year,
+        genres: genres,
+        language: lang,
+        country: country,
+        duration: duration,
+        banner: banner,
+        thumbnail: banner,
+        videoUrl: streamUrl,
+        cast: ["Creator Cast"],
+        trending: false,
+        popular: false,
+        topRated: false,
+        recommended: false,
+        isLatest: true
+      };
+      state.customMovies.unshift(newVideo);
+      showToast(`Published: ${title}`);
+    }
     saveState();
     
     document.getElementById('admin-add-video-form').reset();
-    showToast(`Published: ${title}`);
-    
     document.getElementById('admin-tbtn-catalog').click();
     renderAllViewCatalogs();
   });
@@ -2177,6 +2292,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.getElementById('contact-success-toast').style.display = 'none';
     }, 4000);
+  });
+
+  // Keyboard Navigation Shortcuts for video player
+  document.addEventListener('keydown', (e) => {
+    const playerView = document.getElementById('player-view');
+    if (playerView && !playerView.classList.contains('hidden')) {
+      const video = document.getElementById('main-video-player');
+      if (e.code === 'Space') {
+        e.preventDefault();
+        const playBtn = document.getElementById('player-btn-play');
+        if (playBtn) playBtn.click();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        video.currentTime = Math.max(0, video.currentTime - 10);
+        updatePlayerTimeDisplay();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        video.currentTime = Math.min(video.duration || 900, video.currentTime + 10);
+        updatePlayerTimeDisplay();
+      } else if (e.code === 'Escape') {
+        e.preventDefault();
+        exitPlayer();
+      }
+    }
   });
 
 });
